@@ -24,5 +24,13 @@ namespace Auth.Controllers
             return Ok(_app.Messages.Find(id));
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody]Message message)
+        {
+            _app.Messages.Add(message);
+            _app.SaveChanges();
+            return Ok(message);
+        }
     }
 }

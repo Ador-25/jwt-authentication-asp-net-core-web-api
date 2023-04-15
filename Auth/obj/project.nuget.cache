@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "L0Be4wetfaqTIyR0TibnfhSgqFmWj9YFQrFf+6+/Ze1xtFK2Sht+4mdoF4q/9FvEmyEACeNnj0nZ/i7eSS38gQ==",
+  "dgSpecHash": "YT7s+OmsMjURwJT9fQsbaTK55q9njqs7m1okMQH/PAXP3D7c9dV1X3PdCLibB4640neuPWr0lyjqvNesL85QuA==",
   "success": true,
   "projectFilePath": "D:\\My Projects\\Github Projects\\jwt-authentication-asp-net-core-web-api\\Auth\\Auth.csproj",
   "expectedPackageFiles": [
@@ -55,6 +55,7 @@
     "C:\\Users\\Ador\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\Ador\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\Ador\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
+    "C:\\Users\\Ador\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Ador\\.nuget\\packages\\npgsql\\6.0.8\\npgsql.6.0.8.nupkg.sha512",
     "C:\\Users\\Ador\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\6.0.8\\npgsql.entityframeworkcore.postgresql.6.0.8.nupkg.sha512",
     "C:\\Users\\Ador\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
