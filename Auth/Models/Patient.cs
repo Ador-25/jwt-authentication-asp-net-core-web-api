@@ -17,5 +17,7 @@ namespace Auth.Models
         public string? LastDate { get; set; }
         public string? DateOfBirth { get; set; }
         public bool? Action { get; set; }
+
+        public string? RegisterDate { get; set; } 
     }
 }

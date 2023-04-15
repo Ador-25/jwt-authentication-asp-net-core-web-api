@@ -13,6 +13,7 @@ namespace Auth.Models
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Diary> Diaries { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Meeting> Meetings { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

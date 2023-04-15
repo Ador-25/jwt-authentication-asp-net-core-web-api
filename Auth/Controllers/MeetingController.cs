@@ -6,41 +6,42 @@ namespace Auth.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DiaryController : ControllerBase
+    public class MeetingController : ControllerBase
     {
         private readonly AppDbContext _app;
-        public DiaryController(AppDbContext app)
+        public MeetingController(AppDbContext context)
         {
-            _app = app;
+            _app = context;
         }
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Diary diary)
+        public async Task<IActionResult> Add([FromBody] Meeting meeting)
         {
-            _app.Diaries.Add(diary);
+            _app.Meetings.Add(meeting);
             _app.SaveChanges();
-            return Ok(diary);        
+            return Ok(meeting);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(_app.Diaries.ToList());
+            return Ok(_app.Meetings.ToList());
         }
         [HttpGet("details/{id}")]
         public async Task<IActionResult> GetDetails(Guid id)
         {
-            return Ok(_app.Diaries.Find(id));
+            return Ok(_app.Meetings.Find(id));
 
         }
 
         [HttpPatch("edit/{id}")]
-        public async Task<IActionResult> Edit(Guid id, [FromBody] Diary model)
+        public async Task<IActionResult> Edit(Guid id, [FromBody] Meeting model)
         {
-            var temp = _app.Diaries.Find(id);
-            temp.Medication = model.Medication;
-            temp.YesOrNo = model.YesOrNo;
-            temp.Action = model.Action;
-            _app.Diaries.Update(temp);
+            var temp = _app.Meetings.Find(id);
+            if(temp != null)
+            {
+                model.Id = temp.Id;
+            }
+            _app.Meetings.Update(model);
             _app.SaveChanges();
             return Ok(temp);
         }
@@ -48,12 +49,11 @@ namespace Auth.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var temp = _app.Diaries.Find(id);
-            _app.Diaries.Remove(temp);
+            var temp = _app.Meetings.Find(id);
+            _app.Meetings.Remove(temp);
             _app.SaveChanges();
             return Ok("DELETED");
         }
-
 
     }
 }
