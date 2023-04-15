@@ -27,7 +27,7 @@ namespace Auth.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody]Admin model)
+        public async Task<IActionResult> Login([FromBody] Admin model)
         {
             Console.WriteLine(model);
             var user = await userManager.FindByNameAsync(model.Username);
@@ -36,10 +36,10 @@ namespace Auth.Controllers
                 var userRoles = await userManager.GetRolesAsync(user);
 
                 var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
+        {
+            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        };
 
                 foreach (var userRole in userRoles)
                 {
@@ -55,11 +55,12 @@ namespace Auth.Controllers
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
-
+                var role = model.Username == "admin29@gmail.com" ? "Admin" : "User";
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    expiration = token.ValidTo,
+                    role = role // Add the user role to the response
                 });
             }
             return Unauthorized();
