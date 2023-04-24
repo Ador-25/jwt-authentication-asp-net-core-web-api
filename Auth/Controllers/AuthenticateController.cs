@@ -24,13 +24,47 @@ namespace Auth.Controllers
             _app = app;
             _configuration = configuration;
         }
+
+        [HttpPost("Forget-Pass-email")]
+        public async Task<IActionResult> EditPass([FromBody] ForgetPass fp)
+        {
+            return Ok("Verify Email to confirm");
+        }
+        [HttpPost("Confirm-Otp")]
+        public async Task<IActionResult> AddOtp([FromBody] ForgetPass fp)
+        {
+            return Ok("Verify Email to confirm");
+        }
+        [HttpPost("New-Pass")]
+        public async Task<IActionResult> NewPass([FromBody] ForgetPass fp)
+        {
+            return Ok("Verify Email to confirm");
+        }
+        [HttpGet]
+        [Route("users")]
+        public async Task<IActionResult> users()
+        {
+            var data = _app.Patients.ToList();
+            List<LabelData> res = new List<LabelData>();
+            foreach(var model in data)
+            {
+                LabelData temp = new LabelData
+                {
+                    label = model.Email,
+                    value = model.Email
+                };
+                res.Add(temp);
+            }
+            return Ok(res);
+            
+        }
         [AllowAnonymous]
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] Admin model)
         {
             Console.WriteLine(model);
-            var user = await userManager.FindByNameAsync(model.Username);
+            var user = await userManager.FindByNameAsync(model.Email);
             if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
             {
                 var userRoles = await userManager.GetRolesAsync(user);
@@ -55,9 +89,10 @@ namespace Auth.Controllers
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
-                var role = model.Username == "admin29@gmail.com" ? "Admin" : "User";
+                var role = model.Email == "admin29@gmail.com" ? "Admin" : "User";
                 return Ok(new
                 {
+                    user = model.Email,
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
                     role = role // Add the user role to the response
@@ -71,7 +106,7 @@ namespace Auth.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] Patient model)
         {
-            var userExists = await userManager.FindByNameAsync(model.Username);
+            var userExists = await userManager.FindByNameAsync(model.Email);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
@@ -79,7 +114,7 @@ namespace Auth.Controllers
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
+                UserName = model.Email
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -108,7 +143,7 @@ namespace Auth.Controllers
             {
 
             }
-            return Ok(new Response { Status = "Success", Message = "OTP Sent to Email Please confirm." });
+            return Ok(new Response { Status = "Success", Message = "Registration Success" });
 
         }
 
@@ -120,15 +155,15 @@ namespace Auth.Controllers
         [Route("register-admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] Admin model)
         {
-            var userExists = await userManager.FindByNameAsync(model.Username);
+            var userExists = await userManager.FindByNameAsync(model.Email);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
 
             ApplicationUser user = new ApplicationUser()
             {
-                Email = model.Username,
+                Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
+                UserName = model.Email
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -154,7 +189,7 @@ namespace Auth.Controllers
             {
 
             }
-            return Ok(new Response { Status = "Success", Message = "OTP Sent to Email Please confirm." });
+            return Ok(new Response { Status = "Success", Message = "Registration Success" });
 
         }
     }

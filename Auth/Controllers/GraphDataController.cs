@@ -19,64 +19,218 @@ namespace Auth.Controllers
         public async Task<IActionResult> GetMed()
         {
             var diaries = _app.Diaries.ToList();
+            var users = _app.Patients.ToList();
             GraphModel graph = new GraphModel();
             int error = 0;
-            foreach(var diary in diaries)
-            {
-                var data = diary.Date.Split('-')[1];
-                switch (data)
+            List<Data> data = new List<Data>();
+            data.Add(
+                new Data
                 {
-                    case "01":
-                    case "1":
-                        graph.Jan++;
-                        break;
-                    case "02":
-                    case "2":
-                        graph.Feb++;
-                        break;
-                    case "03":
-                    case "3":
-                        graph.Mar++;
-                        break;
-                    case "04":
-                    case "4":
-                        graph.Apr++;
-                        break;
-                    case "05":
-                    case "5":
-                        graph.May++;
-                        break;
-                    case "06":
-                    case "6":
-                        graph.Jun++;
-                        break;
-                    case "07":
-                    case "7":
-                        graph.Jul++;
-                        break;
-                    case "08":
-                    case "8":
-                        graph.Aug++;
-                        break;
-                    case "09":
-                    case "9":
-                        graph.Sep++;
-                        break;
-                    case "10":
-                        graph.Oct++;
-                        break;
-                    case "11":
-                        graph.Nov++;
-                        break;
-                    case "12":
-                        graph.Dec++;
-                        break;
-                    default:
-                        error++;
-                        break;
+                    month = "jan"
                 }
+                );
+            data.Add(
+    new Data
+    {
+        month = "feb"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "mar"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "apr"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "may"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "jun"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "jul"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "aug"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "sept"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "oct"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "nov"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "dec"
+    }
+    );
+
+
+
+            foreach (var diary in diaries)
+            {
+                try
+                {
+                    var t = diary.Date.Split('-')[1];
+                    switch (t)
+                    {
+                        case "01":
+                        case "1":
+                            data[0].mt++;
+                            break;
+                        case "02":
+                        case "2":
+                            data[1].mt++;
+                            break;
+                        case "03":
+                        case "3":
+                            data[2].mt++;
+                            break;
+                        case "04":
+                        case "4":
+                            data[3].mt++;
+                            break;
+                        case "05":
+                        case "5":
+                            data[4].mt++;
+                            break;
+                        case "06":
+                        case "6":
+                            data[5].mt++;
+                            break;
+                        case "07":
+                        case "7":
+                            data[6].mt++;
+                            break;
+                        case "08":
+                        case "8":
+                            data[7].mt++;
+                            break;
+                        case "09":
+                        case "9":
+                            data[8].mt++;
+                            break;
+                        case "10":
+                            data[9].mt++;
+                            break;
+                        case "11":
+                            data[10].mt++;
+                            break;
+                        case "12":
+                            data[11].mt++;
+                            break;
+                        default:
+                            data[3].mt++ ;
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    data[3].mt++;
+                }
+               
             }
-            return Ok(graph);
+
+            foreach (var user in users)
+            {
+               
+
+                try
+                {
+                    var d = user.RegisterDate.Split('-')[1];
+                    switch (d)
+                    {
+                        case "01":
+                        case "1":
+                            data[0].pt++;
+                            break;
+                        case "02":
+                        case "2":
+                            data[1].pt++;
+                            break;
+                        case "03":
+                        case "3":
+                            data[2].pt++;
+                            break;
+                        case "04":
+                        case "4":
+                            data[3].pt++;
+                            break;
+                        case "05":
+                        case "5":
+                            data[4].pt++;
+                            break;
+                        case "06":
+                        case "6":
+                            data[5].pt++;
+                            break;
+                        case "07":
+                        case "7":
+                            data[6].pt++;
+                            break;
+                        case "08":
+                        case "8":
+                            data[7].pt++;
+                            break;
+                        case "09":
+                        case "9":
+                            data[8].pt++;
+                            break;
+                        case "10":
+                            data[9].pt++;
+                            break;
+                        case "11":
+                            data[10].pt++;
+                            break;
+                        case "12":
+                            data[11].pt++;
+                            break;
+                        default:
+                            error++;
+                            break;
+                    }
+                }
+                catch(Exception ex)
+                {
+
+                }
+                
+            }
+
+
+
+            return Ok(data);
         }
 
         [HttpGet]
@@ -84,69 +238,153 @@ namespace Auth.Controllers
         public async Task<IActionResult> GetUser()
         {
             var users = _app.Patients.ToList();
+            var meds =_app.Diaries.ToList();
             GraphModel graph = new GraphModel();
             int error = 0;
+           
+
+            List<Data> data = new List<Data>();
+            data.Add(
+                new Data
+                {
+                    month="jan"
+                }
+                );
+            data.Add(
+    new Data
+    {
+        month = "feb"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "mar"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "apr"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "may"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "jun"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "jul"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "aug"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "sept"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "oct"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "nov"
+    }
+    );
+            data.Add(
+    new Data
+    {
+        month = "dec"
+    }
+    );
+
             foreach (var user in users)
             {
                 if (user.RegisterDate != null)
                 {
-                    var data = user.RegisterDate.Split('-')[1];
-
-                    switch (data)
+                    try
                     {
-                        case "01":
-                        case "1":
-                            graph.Jan++;
-                            break;
-                        case "02":
-                        case "2":
-                            graph.Feb++;
-                            break;
-                        case "03":
-                        case "3":
-                            graph.Mar++;
-                            break;
-                        case "04":
-                        case "4":
-                            graph.Apr++;
-                            break;
-                        case "05":
-                        case "5":
-                            graph.May++;
-                            break;
-                        case "06":
-                        case "6":
-                            graph.Jun++;
-                            break;
-                        case "07":
-                        case "7":
-                            graph.Jul++;
-                            break;
-                        case "08":
-                        case "8":
-                            graph.Aug++;
-                            break;
-                        case "09":
-                        case "9":
-                            graph.Sep++;
-                            break;
-                        case "10":
-                            graph.Oct++;
-                            break;
-                        case "11":
-                            graph.Nov++;
-                            break;
-                        case "12":
-                            graph.Dec++;
-                            break;
-                        default:
-                            error++;
-                            break;
+                        var d = user.RegisterDate.Split('-')[1];
+                        switch (d)
+                        {
+                            case "01":
+                            case "1":
+                                data[0].pt++;
+                                break;
+                            case "02":
+                            case "2":
+                                data[1].pt++;
+                                break;
+                            case "03":
+                            case "3":
+                                data[2].pt++;
+                                break;
+                            case "04":
+                            case "4":
+                                data[3].pt++;
+                                break;
+                            case "05":
+                            case "5":
+                                data[4].pt++;
+                                break;
+                            case "06":
+                            case "6":
+                                data[5].pt++;
+                                break;
+                            case "07":
+                            case "7":
+                                data[6].pt++;
+                                break;
+                            case "08":
+                            case "8":
+                                data[7].pt++;
+                                break;
+                            case "09":
+                            case "9":
+                                data[8].pt++;
+                                break;
+                            case "10":
+                                data[9].pt++;
+                                break;
+                            case "11":
+                                data[10].pt++;
+                                break;
+                            case "12":
+                                data[11].pt++;
+                                break;
+                            default:
+                                error++;
+                                break;
+                        }
                     }
+                    catch (Exception e)
+                    {
+                        data[3].pt++;
+                    }
+                    
                 }
-                
+
             }
-            return Ok(graph);
+            return Ok(data);
         }
     }
 }

@@ -100,7 +100,6 @@ namespace Auth.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Date")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("DateOfBirth")
@@ -125,7 +124,7 @@ namespace Auth.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Date")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -133,7 +132,10 @@ namespace Auth.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PatientName")
+                    b.Property<bool>("Success")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Time")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -174,6 +176,10 @@ namespace Auth.Migrations
                     b.Property<bool?>("Action")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("ChildName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -182,10 +188,12 @@ namespace Auth.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Father")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Fullname")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -193,11 +201,12 @@ namespace Auth.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Mother")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
-                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
                         .HasColumnType("text");
 
                     b.Property<string>("RegisterDate")
@@ -207,7 +216,6 @@ namespace Auth.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

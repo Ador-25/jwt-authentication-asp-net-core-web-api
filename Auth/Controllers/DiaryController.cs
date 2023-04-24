@@ -33,7 +33,7 @@ namespace Auth.Controllers
 
         }
 
-        [HttpPatch("edit/{id}")]
+        [HttpPost("edit/{id}")]
         public async Task<IActionResult> Edit(Guid id, [FromBody] Diary model)
         {
             var temp = _app.Diaries.Find(id);

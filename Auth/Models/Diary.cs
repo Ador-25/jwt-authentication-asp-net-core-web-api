@@ -11,6 +11,6 @@ namespace Auth.Models
         public string Medication { get; set; }
         public string YesOrNo { get; set; }
         public bool Action { get; set; }
-        public string Date { get; set; }
+        public string? Date { get; set; }
     }
 }

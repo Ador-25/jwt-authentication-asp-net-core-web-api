@@ -7,7 +7,9 @@ namespace Auth.Models
         [Key]
         public Guid Id { get; set; }
         public string MeetingUrl { get; set; }
-        public string PatientName { get; set; }
-        public string Email  { get; set; }
+        public string Time { get; set; }
+        public string Date { get; set; }
+        public bool Success { get; set; } = false;
     }
+
 }

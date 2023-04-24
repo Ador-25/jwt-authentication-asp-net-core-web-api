@@ -13,19 +13,33 @@ namespace Auth.Controllers
         {
             _app = t;
         }
-
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody]Patient patient)
+        {
+            _app.Patients.Add(patient);
+            _app.SaveChanges();
+            patient.Password = "null";
+            return Ok(patient);
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetPatients()
         {
             return Ok(_app.Patients.ToList());
         }
+        [HttpGet("total")]
+        public async Task<IActionResult> GetTotal()
+        {
+            return Ok(_app.Patients.ToList().Count());
+        }
+
+
         [HttpGet("details/{id}")]
         public async Task<IActionResult> GetPatient(Guid id)
         {
             return Ok(_app.Patients.Find(id));
         }
-        [HttpPatch("edit/{id}")]
+        [HttpPost("edit/{id}")]
         public async Task<IActionResult> Edit(Guid id,[FromBody] Patient model)
         {
             var temp = _app.Patients.Find(id);

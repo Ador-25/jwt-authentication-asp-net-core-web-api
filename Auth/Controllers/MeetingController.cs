@@ -1,6 +1,8 @@
 ﻿using Auth.Models;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 
 namespace Auth.Controllers
 {
@@ -13,11 +15,40 @@ namespace Auth.Controllers
         {
             _app = context;
         }
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Meeting meeting)
+        private void SendMail(string em,Meeting meeting)
         {
-            _app.Meetings.Add(meeting);
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse("admin@ethereal.email"));
+            email.To.Add(MailboxAddress.Parse(em));
+            email.Subject = "Meet Link";
+            email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            {
+                Text = "TIME: " + meeting.Time + "</br>"
+                + "DATE: " + meeting.Date + "</br>" +
+                "URL: " + meeting.MeetingUrl
+            };
+            using var smtp = new SmtpClient();
+            smtp.Connect("smtp.ethereal.email", 587, MailKit.Security.SecureSocketOptions.StartTls);
+            var m = "vincent.schulist@ethereal.email";
+            var p = "FHRZFVf5RevgassV9p";
+            smtp.Authenticate(m, p);
+            smtp.Send(email);
+            smtp.Disconnect(true);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] MeetingPost meeting)
+        {
+            Meeting m = new Meeting();
+            m.Id= Guid.NewGuid();
+            m.Time = meeting.Time;
+            m.Date= meeting.Date;
+            m.MeetingUrl = meeting.MeetingUrl;
+            _app.Meetings.Add(m);
             _app.SaveChanges();
+            foreach(var mail in meeting.Emails)
+            {
+                SendMail(mail, m);
+            }
             return Ok(meeting);
         }
 
